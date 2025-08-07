@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useSession } from "next-auth/react";
@@ -28,7 +29,6 @@ export default function Home() {
 
   console.log("Home component rendered - Status:", status, "Session:", session);
 
-  // Redirect to login if not authenticated
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login");
@@ -62,7 +62,7 @@ export default function Home() {
     } catch (error: any) {
       console.error("Error fetching calendar events:", error);
       
-      // The interceptor already logs detailed error info
+     
       if (error.response?.data?.error) {
         setError(`API Error: ${error.response.status} - ${error.response.data.error}`);
       } else if (error.message) {
@@ -164,6 +164,86 @@ export default function Home() {
               className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
             >
               Test Calendar API
+            </button>
+            <button 
+              onClick={async () => {
+                try {
+                  await api.post('/api/test/reminder');
+                  alert('Reminder check triggered! Check console for logs.');
+                } catch (error) {
+                  console.error('Test reminder error:', error);
+                }
+              }}
+              className="bg-green-500 text-white px-3 py-1 rounded text-sm"
+            >
+              Test Reminder
+            </button>
+            <button 
+              onClick={async () => {
+                try {
+                  await api.post('/api/test/cron');
+                  alert('Cron job test triggered! Check console for detailed logs.');
+                } catch (error) {
+                  console.error('Cron test error:', error);
+                }
+              }}
+              className="bg-orange-500 text-white px-3 py-1 rounded text-sm"
+            >
+              Test Cron
+            </button>
+            <button 
+              onClick={async () => {
+                try {
+                  const response = await api.post('/api/test/force-call');
+                  if (response.data.success) {
+                    alert('Force call initiated! Check your phone.');
+                  } else {
+                    alert('Force call failed: ' + response.data.error);
+                  }
+                } catch (error) {
+                  console.error('Force call test error:', error);
+                  alert('Force call test failed. Check console for details.');
+                }
+              }}
+              className="bg-red-500 text-white px-3 py-1 rounded text-sm"
+            >
+              Force Call
+            </button>
+            <button 
+              onClick={async () => {
+                try {
+                  const response = await api.post('/api/test/create-event');
+                  if (response.data.success) {
+                    alert('Test event created! The cron job should detect it in 3 minutes and call you.');
+                  } else {
+                    alert('Failed to create test event: ' + response.data.error);
+                  }
+                } catch (error) {
+                  console.error('Create event test error:', error);
+                  alert('Failed to create test event. Check console for details.');
+                }
+              }}
+              className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
+            >
+              Create Test Event
+            </button>
+            <button 
+              onClick={async () => {
+                try {
+                  const response = await api.post('/api/test/twilio');
+                  if (response.data.success) {
+                    alert('Twilio test call initiated! Check your phone.');
+                  } else {
+                    alert('Twilio test failed: ' + response.data.error);
+                  }
+                } catch (error) {
+                  console.error('Twilio test error:', error);
+                  alert('Twilio test failed. Check console for details.');
+                }
+              }}
+              className="bg-purple-500 text-white px-3 py-1 rounded text-sm"
+            >
+              Test Twilio
             </button>
           </div>
         </div>

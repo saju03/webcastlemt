@@ -3,6 +3,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { api } from "@/lib/axios";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -10,9 +11,27 @@ export default function Page() {
 
   useEffect(() => {
     if (status === "authenticated" && session) {
-      router.push("/");
+      // Check if user has completed setup
+      checkSetupAndRedirect();
     }
   }, [session, status, router]);
+
+  const checkSetupAndRedirect = async () => {
+    try {
+      const response = await api.get('/api/user/setup-status');
+      if (response.data.hasPhone) {
+        // User has phone number, redirect to home
+        router.push("/");
+      } else {
+        // User needs to complete setup
+        router.push("/setup");
+      }
+    } catch (error) {
+      console.error("Error checking setup status:", error);
+      // Default to setup page if there's an error
+      router.push("/setup");
+    }
+  };
 
   // Show loading while checking authentication
   if (status === "loading") {
