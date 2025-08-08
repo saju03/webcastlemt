@@ -167,28 +167,28 @@ webcastlemt/
 - `createdAt` - Record creation timestamp
 - `updatedAt` - Last update timestamp
 
-## 🔐 Authentication
+## Authentication
 
 The application uses NextAuth.js with Google OAuth for authentication. Users can:
 - Sign in with their Google account
 - Grant calendar access permissions
 - Manage their profile and settings
 
-## 📞 Twilio Integration
+## Twilio Integration
 
 The application integrates with Twilio to:
 - Make automated phone calls for event reminders
 - Handle call responses and interactions
 - Track call status and outcomes
 
-## 🕐 Cron Jobs
+##  Cron Jobs
 
 Automated tasks run periodically to:
 - Check for upcoming events
 - Trigger reminder calls
 - Update event status
 
-## 🚀 Deployment
+## Deployment
 
 ### Vercel (Recommended)
 
@@ -205,7 +205,7 @@ The application can be deployed to any platform that supports Next.js:
 - DigitalOcean App Platform
 - AWS Amplify
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -217,7 +217,7 @@ The application can be deployed to any platform that supports Next.js:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 
@@ -248,6 +248,6 @@ If you encounter any issues:
 3. Check the browser console for errors
 4. Verify all environment variables are set correctly
 
-## 📞 Support
+## Support
 
-For support, please open an issue in the GitHub repository or contact the development team.
+For support,please contact me sajusuresh03@gmail.com.
