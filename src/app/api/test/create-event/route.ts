@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🧪 Creating test calendar event...');
+    console.log('Creating test calendar event...');
     
     // Get the user's access token
     const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    console.log(`✅ Test event created: ${response.data.summary} at ${eventTime.toISOString()}`);
+    console.log(`Test event created: ${response.data.summary} at ${eventTime.toISOString()}`);
 
     return NextResponse.json({ 
       success: true, 
@@ -65,9 +65,24 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Create test event error:', error);
-    return NextResponse.json({ 
-      success: false, 
-      error: 'Failed to create test event' 
-    }, { status: 500 });
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status || 500;
+      const details = error.response?.data || error.message;
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Failed to create test event',
+          details,
+        },
+        { status }
+      );
+    }
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Failed to create test event',
+      },
+      { status: 500 }
+    );
   }
 } 

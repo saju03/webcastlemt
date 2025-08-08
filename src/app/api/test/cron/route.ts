@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🧪 Manual cron test triggered');
+    console.log('Manual cron test triggered');
     
     // First, let's check what users we have
     const users = await prisma.user.findMany({
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    console.log(`👥 Found ${users.length} users with phone numbers and access tokens`);
+    console.log(`Found ${users.length} users with phone numbers and access tokens`);
     
     if (users.length === 0) {
       return NextResponse.json({ 
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Show user details
-    const userDetails = users.map(user => ({
+    const userDetails = users.map((user:any) => ({
       email: user.email,
       name: user.name,
       phone: user.phone,

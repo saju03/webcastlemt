@@ -68,18 +68,18 @@ export const twilioService = {
     } catch (error: any) {
       // Handle the specific error for already active execution
       if (error.message && error.message.includes('already active for this contact')) {
-        console.log(`⚠️ Skipping call to ${toNumber} - already has an active execution`);
+        console.log(`Skipping call to ${toNumber} - already has an active execution`);
         return true; // Return true to prevent retry attempts
       }
       
       // Handle other Twilio errors
       if (error.code === 20404) {
-        console.log(`⚠️ Skipping call to ${toNumber} - flow not found or inactive`);
+        console.log(`Skipping call to ${toNumber} - flow not found or inactive`);
         return false;
       }
       
       if (error.code === 21211) {
-        console.log(`⚠️ Skipping call to ${toNumber} - invalid phone number`);
+        console.log(`Skipping call to ${toNumber} - invalid phone number`);
         return false;
       }
       
@@ -100,10 +100,10 @@ export const twilioService = {
       }
       // Test the connection by getting account info
       const account = await client.api.accounts(accountSid).fetch();
-      console.log(`✅ Twilio connection successful - Account: ${account.friendlyName}`);
+      console.log(`Twilio connection successful - Account: ${account.friendlyName}`);
       return true;
     } catch (error) {
-      console.error('❌ Twilio connection test failed:', error);
+      console.error('Twilio connection test failed:', error);
       return false;
     }
   },

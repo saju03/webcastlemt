@@ -15,19 +15,18 @@ apiClient.interceptors.request.use(
   (config) => {
     // Log request details in development
     if (process.env.NODE_ENV === 'development') {
-      console.log(`🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`, {
+      console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`, {
         params: config.params,
         data: config.data,
       });
     }
 
-    // Add any common headers here
-    // For example, you could add CSRF tokens or other auth headers
+   
     
     return config;
   },
   (error) => {
-    console.error('❌ Request Error:', error);
+    console.error('Request Error:', error);
     return Promise.reject(error);
   }
 );
@@ -37,7 +36,7 @@ apiClient.interceptors.response.use(
   (response) => {
     // Log response details in development
     if (process.env.NODE_ENV === 'development') {
-      console.log(`✅ API Response: ${response.status} ${response.config.url}`, {
+      console.log(`API Response: ${response.status} ${response.config.url}`, {
         data: response.data,
       });
     }
@@ -50,7 +49,7 @@ apiClient.interceptors.response.use(
       // Server responded with error status
       const { status, data, config } = error.response;
       
-      console.error(`❌ API Error ${status}: ${config?.url}`, {
+      console.error(`API Error ${status}: ${config?.url}`, {
         status,
         data,
         url: config?.url,
@@ -59,30 +58,30 @@ apiClient.interceptors.response.use(
       // Handle specific error cases
       switch (status) {
         case 401:
-          console.error('🔐 Unauthorized - User needs to re-authenticate');
+          console.error('Unauthorized - User needs to re-authenticate');
           // You could redirect to login here if needed
           break;
         case 403:
-          console.error('🚫 Forbidden - User lacks permission');
+          console.error(' Forbidden - User lacks permission');
           break;
         case 404:
-          console.error('🔍 Not Found - Resource not available');
+          console.error(' Not Found - Resource not available');
           break;
         case 500:
-          console.error('💥 Server Error - Internal server error');
+          console.error(' Server Error - Internal server error');
           break;
         default:
-          console.error(`⚠️ HTTP Error ${status}`);
+          console.error(` HTTP Error ${status}`);
       }
     } else if (error.request) {
       // Request was made but no response received
-      console.error('🌐 Network Error - No response received', {
+      console.error(' Network Error - No response received', {
         url: error.config?.url,
         timeout: error.code === 'ECONNABORTED',
       });
     } else {
       // Something else happened
-      console.error('❓ Unknown Error:', error.message);
+      console.error(' Unknown Error:', error.message);
     }
 
     return Promise.reject(error);

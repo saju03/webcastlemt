@@ -3,7 +3,7 @@ import { twilioService } from '@/lib/twilio';
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🧪 Testing Twilio connection...');
+    console.log('Testing Twilio connection...');
     
     // Test the connection first
     const connectionTest = await twilioService.testConnection();

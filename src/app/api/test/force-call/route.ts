@@ -5,9 +5,9 @@ import { FULL_E164_REGEX } from '@/lib/phone';
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🧪 Force call test triggered');
+    console.log('Force call test triggered');
     const cfg = twilioService.getConfigStatus();
-    console.log('🛠️ Twilio config:', cfg);
+    console.log('Twilio config:', cfg);
     if (!cfg.hasAccountSid || !cfg.hasAuthToken || !cfg.hasFromNumber || !cfg.hasStudioFlowSid) {
       return NextResponse.json({
         success: false,
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       targetUserName = user.name || targetUserName;
     }
 
-    console.log(`📞 Force calling ${targetUserName} at ${targetPhone}`);
+    console.log(`Force calling ${targetUserName} at ${targetPhone}`);
 
     // Force a call without checking calendar events
     const callSuccess = await twilioService.makeReminderCall(

@@ -14,7 +14,7 @@ const googleApiClient = axios.create({
 googleApiClient.interceptors.response.use(
   (response) => {
     if (process.env.NODE_ENV === 'development') {
-      console.log(`✅ Google API Response: ${response.status}`, {
+      console.log(`Google API Response: ${response.status}`, {
         url: response.config.url,
         data: response.data,
       });
@@ -23,7 +23,7 @@ googleApiClient.interceptors.response.use(
   },
   (error) => {
     if (process.env.NODE_ENV === 'development') {
-      console.error(`❌ Google API Error:`, {
+      console.error(`Google API Error:`, {
         status: error.response?.status,
         data: error.response?.data,
         url: error.config?.url,
