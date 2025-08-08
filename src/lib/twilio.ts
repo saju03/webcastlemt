@@ -20,6 +20,20 @@ export interface EventReminder {
 }
 
 export const twilioService = {
+  getConfigStatus(): {
+    hasAccountSid: boolean;
+    hasAuthToken: boolean;
+    hasFromNumber: boolean;
+    hasStudioFlowSid: boolean;
+  } {
+    return {
+      hasAccountSid: Boolean(accountSid),
+      hasAuthToken: Boolean(authToken),
+      hasFromNumber: Boolean(fromNumber),
+      hasStudioFlowSid: Boolean(studioFlowSid),
+    };
+  },
+
   // Make a phone call using Twilio Studio flow
   async makeReminderCall(toNumber: string, reminder: EventReminder): Promise<boolean> {
     try {

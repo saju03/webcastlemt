@@ -15,19 +15,25 @@ export async function POST(request: NextRequest) {
       }, { status: 401 });
     }
 
-    // Create an event 3 minutes from now
+    // Read optional payload
+    const body = await request.json().catch(() => ({} as any));
+    const summary: string = body?.summary || 'Test Event - Cron Job Test';
+    const minutesAhead: number = Number.isFinite(body?.minutesAhead) ? Number(body.minutesAhead) : 3;
+    const durationMinutes: number = Number.isFinite(body?.durationMinutes) ? Number(body.durationMinutes) : 30;
+
+    // Create an event minutesAhead from now
     const now = new Date();
-    const eventTime = new Date(now.getTime() + 3 * 60 * 1000); // 3 minutes from now
+    const eventTime = new Date(now.getTime() + Math.max(0, minutesAhead) * 60 * 1000);
     
     const event = {
-      summary: 'Test Event - Cron Job Test',
+      summary,
       description: 'This is a test event to test the cron job functionality',
       start: {
         dateTime: eventTime.toISOString(),
         timeZone: 'UTC',
       },
       end: {
-        dateTime: new Date(eventTime.getTime() + 30 * 60 * 1000).toISOString(), // 30 minutes duration
+        dateTime: new Date(eventTime.getTime() + Math.max(1, durationMinutes) * 60 * 1000).toISOString(),
         timeZone: 'UTC',
       },
     };
@@ -55,7 +61,7 @@ export async function POST(request: NextRequest) {
         startTime: response.data.start.dateTime,
         endTime: response.data.end.dateTime
       },
-      note: 'The cron job should detect this event within 3 minutes and make a call'
+      note: `The cron job should detect this event within ${minutesAhead} minutes and make a call`
     });
   } catch (error) {
     console.error('Create test event error:', error);
